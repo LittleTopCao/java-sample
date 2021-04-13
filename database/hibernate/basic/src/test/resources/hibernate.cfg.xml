@@ -1,0 +1,42 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!--
+  ~ Hibernate, Relational Persistence for Idiomatic Java
+  ~
+  ~ License: GNU Lesser General Public License (LGPL), version 2.1 or later.
+  ~ See the lgpl.txt file in the root directory or <http://www.gnu.org/licenses/lgpl-2.1.html>.
+  -->
+<!DOCTYPE hibernate-configuration PUBLIC
+        "-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+
+<hibernate-configuration>
+
+    <session-factory>
+
+        <!-- Database connection settings, 使用 h2 数据库，指向内存 -->
+        <property name="connection.driver_class">org.h2.Driver</property>
+        <property name="connection.url">jdbc:h2:mem:db1;DB_CLOSE_DELAY=-1;MVCC=TRUE</property>
+        <property name="connection.username">sa</property>
+        <property name="connection.password"/>
+
+        <!-- JDBC connection pool (use the built-in) ，连接池 的 大小，hibernate 自带一个连接池 -->
+        <property name="connection.pool_size">1</property>
+
+        <!-- SQL dialect， 设置 sql 方言-->
+        <property name="dialect">org.hibernate.dialect.H2Dialect</property>
+
+        <!-- Disable the second-level cache ， 缓存 -->
+        <property name="cache.provider_class">org.hibernate.cache.internal.NoCacheProvider</property>
+
+        <!-- Echo all executed SQL to stdout， 显示 sql -->
+        <property name="show_sql">true</property>
+
+        <!-- Drop and re-create the database schema on startup，自动创建数据库表 -->
+        <property name="hbm2ddl.auto">create</property>
+
+        <!-- 映射文件 -->
+        <mapping resource="org/hibernate/tutorial/hbm/Event.hbm.xml"/>
+
+    </session-factory>
+
+</hibernate-configuration>

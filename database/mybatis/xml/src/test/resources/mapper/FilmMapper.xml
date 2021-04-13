@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.test.FilmMapper">
+
+
+    <!--
+    动态 SQL
+
+        1。if 标签
+            根据条件决定 是否 包含 sql 语句片段
+            test 属性 中 输入条件
+        2。choose (when, otherwise) 标签
+            根据 多个 条件，选择一个
+        3。trim (where, set)
+            这三个标签 主要用于 去除 在 拼接时 多余的字符，例如 where 、逗号
+            where 标签 包裹 if 语句，这样 就不用 输入 where 字符了，where 会去除多余的 where 、and、or 字符
+                <select id="findActiveBlogLike"
+                     resultType="Blog">
+                  SELECT * FROM BLOG
+                  <where>
+                    <if test="state != null">
+                         state = #{state}
+                    </if>
+                    <if test="title != null">
+                        AND title like #{title}
+                    </if>
+                    <if test="author != null and author.name != null">
+                        AND author_name like #{author.name}
+                    </if>
+                  </where>
+                </select>
+
+            set 标签，用来在插入时 去掉 多余的 逗号
+                <update id="updateAuthorIfNecessary">
+                  update Author
+                    <set>
+                      <if test="username != null">username=#{username},</if>
+                      <if test="password != null">password=#{password},</if>
+                      <if test="email != null">email=#{email},</if>
+                      <if test="bio != null">bio=#{bio}</if>
+                    </set>
+                  where id=#{id}
+                </update>
+
+            trim 标签，如果 where 和 set 不满足要求，你可以使用 trim 自定义
+                等价于 where 标签的 trim 标签是
+                    <trim prefix="WHERE" prefixOverrides="AND |OR ">
+                      ...
+                    </trim>
+                    其中 prefixOverrides 属性指定如果前边是 字符 xx 就删除，prefix 属性指定在前边 补充什么 字符
+                等价于 set 标签的 trim 标签是
+                    <trim prefix="SET" suffixOverrides=",">
+                      ...
+                    </trim>
+
+
+        4。foreach
+            循环 标签，可以 循环 任何可迭代对象（如 List、Set 等）、Map 对象或者数组对象
+            <select id="selectPostIn" resultType="domain.blog.Post">
+              SELECT *
+              FROM POST P
+              WHERE ID in
+              <foreach item="item" index="index" collection="list"
+                  open="(" separator="," close=")">
+                    #{item}
+              </foreach>
+            </select>
+
+
+        5。script
+            在 @Update 注解中使用 动态SQL，需要使用 <script> 标签包裹
+
+        6。bind
+            在语句中 创建变量 ，可以修改 传入的 参数
+
+                <select id="selectBlogsLike" resultType="Blog">
+                  <bind name="pattern" value="'%' + _parameter.getTitle() + '%'" />
+                  SELECT * FROM BLOG
+                  WHERE title LIKE #{pattern}
+                </select>
+
+        7。数据库支持
+            在 if 标签的 test 属性中 可以通过 _databaseId 判断 数据库 类型
+                <if test="_databaseId == 'oracle'">
+                  select seq_users.nextval from dual
+                </if>
+
+        8。动态SQL中的插入脚本语言
+
+    -->
+    <select id="findFilmByTitle" resultMap="actorMap">
+        select *
+        from film
+        where 1 = 1
+        <if test="title != null">
+            and title like #{title}
+        </if>
+    </select>
+
+</mapper>

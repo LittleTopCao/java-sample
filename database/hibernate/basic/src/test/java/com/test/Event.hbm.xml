@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+
+<!--
+  ~ Hibernate, Relational Persistence for Idiomatic Java
+  ~
+  ~ License: GNU Lesser General Public License (LGPL), version 2.1 or later.
+  ~ See the lgpl.txt file in the root directory or <http://www.gnu.org/licenses/lgpl-2.1.html>.
+
+  Hibernate使用映射元数据来确定如何加载和存储持久化类的对象。Hibernate映射文件是为Hibernate提供此元数据的一种选择。
+  另一种是用注解
+  -->
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- package 是包名， 会加在类名前-->
+<hibernate-mapping package="com.test">
+    <!-- name 是类名，table 是表名-->
+    <class name="com.test.Event" table="EVENTS">
+        <!-- 定义主键 -->
+        <id name="id" column="EVENT_ID">
+            <!-- 主键的生成策略， 这个为递增 -->
+            <generator class="increment"/>
+        </id>
+        <!-- name 属性名， column 列名， type 转换器类型，如果不指定 hibernate 会通过反射确定属性类型 -->
+        <property name="date" type="timestamp" column="EVENT_DATE"/>
+        <!-- 属性名，同名可以不写 column -->
+        <property name="title"/>
+    </class>
+
+</hibernate-mapping>

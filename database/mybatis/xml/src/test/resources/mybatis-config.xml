@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+
+    <!--   1。这些属性可以在外部进行配置，并可以进行动态替换。你既可以在典型的 Java 属性文件中配置这些属性，也可以在 properties 元素的子元素中设置。 -->
+    <!--    <properties></properties>-->
+
+
+    <!--    2。全局的一些设置，这是 MyBatis 中极为重要的调整设置，它们会改变 MyBatis 的运行时行为。
+            所有配置
+                cacheEnabled	全局配置开关，全局性地开启或关闭所有映射器配置文件中已配置的任何缓存。	true | false	true
+                lazyLoadingEnabled	延迟加载的全局开关。当开启时，所有关联对象都会延迟加载。 特定关联关系中可通过设置 fetchType 属性来覆盖该项的开关状态。	true | false	false
+                aggressiveLazyLoading	开启时，任一方法的调用都会加载该对象的所有延迟加载属性。 否则，每个延迟加载属性会按需加载（参考 lazyLoadTriggerMethods)。	true | false	false （在 3.4.1 及之前的版本中默认为 true）
+                multipleResultSetsEnabled	是否允许单个语句返回多结果集（需要数据库驱动支持）。	true | false	true
+                useColumnLabel	使用列标签代替列名。实际表现依赖于数据库驱动，具体可参考数据库驱动的相关文档，或通过对比测试来观察。	true | false	true
+                useGeneratedKeys	允许 JDBC 支持自动生成主键，需要数据库驱动支持。如果设置为 true，将强制使用自动生成主键。尽管一些数据库驱动不支持此特性，但仍可正常工作（如 Derby）。	true | false	False
+                autoMappingBehavior	指定 MyBatis 应如何自动映射列到字段或属性。 NONE 表示关闭自动映射；PARTIAL 只会自动映射没有定义嵌套结果映射的字段。 FULL 会自动映射任何复杂的结果集（无论是否嵌套）。	NONE, PARTIAL, FULL	PARTIAL
+                autoMappingUnknownColumnBehavior	指定发现自动映射目标未知列（或未知属性类型）的行为。NONE, WARNING, FAILING	NONE
+                    NONE: 不做任何反应
+                    WARNING: 输出警告日志（'org.apache.ibatis.session.AutoMappingUnknownColumnBehavior' 的日志等级必须设置为 WARN）
+                    FAILING: 映射失败 (抛出 SqlSessionException)
+                defaultExecutorType	配置默认的执行器。SIMPLE 就是普通的执行器；REUSE 执行器会重用预处理语句（PreparedStatement）； BATCH 执行器不仅重用语句还会执行批量更新。	SIMPLE REUSE BATCH	SIMPLE
+                defaultStatementTimeout	设置超时时间，它决定数据库驱动等待数据库响应的秒数。	任意正整数	未设置 (null)
+                defaultFetchSize	为驱动的结果集获取数量（fetchSize）设置一个建议值。此参数只可以在查询设置中被覆盖。	任意正整数	未设置 (null)
+                defaultResultSetType	指定语句默认的滚动策略。（新增于 3.5.2）	FORWARD_ONLY | SCROLL_SENSITIVE | SCROLL_INSENSITIVE | DEFAULT（等同于未设置）	未设置 (null)
+                safeRowBoundsEnabled	是否允许在嵌套语句中使用分页（RowBounds）。如果允许使用则设置为 false。	true | false	False
+                safeResultHandlerEnabled	是否允许在嵌套语句中使用结果处理器（ResultHandler）。如果允许使用则设置为 false。	true | false	True
+                mapUnderscoreToCamelCase	是否开启驼峰命名自动映射，即从经典数据库列名 A_COLUMN 映射到经典 Java 属性名 aColumn。	true | false	False
+                localCacheScope	MyBatis 利用本地缓存机制（Local Cache）防止循环引用和加速重复的嵌套查询。 默认值为 SESSION，会缓存一个会话中执行的所有查询。 若设置值为 STATEMENT，本地缓存将仅用于执行语句，对相同 SqlSession 的不同查询将不会进行缓存。	SESSION | STATEMENT	SESSION
+                jdbcTypeForNull	当没有为参数指定特定的 JDBC 类型时，空值的默认 JDBC 类型。 某些数据库驱动需要指定列的 JDBC 类型，多数情况直接用一般类型即可，比如 NULL、VARCHAR 或 OTHER。	JdbcType 常量，常用值：NULL、VARCHAR 或 OTHER。	OTHER
+                lazyLoadTriggerMethods	指定对象的哪些方法触发一次延迟加载。	用逗号分隔的方法列表。	equals,clone,hashCode,toString
+                defaultScriptingLanguage	指定动态 SQL 生成使用的默认脚本语言。	一个类型别名或全限定类名。	org.apache.ibatis.scripting.xmltags.XMLLanguageDriver
+                defaultEnumTypeHandler	指定 Enum 使用的默认 TypeHandler 。（新增于 3.4.5）	一个类型别名或全限定类名。	org.apache.ibatis.type.EnumTypeHandler
+                callSettersOnNulls	指定当结果集中值为 null 的时候是否调用映射对象的 setter（map 对象时为 put）方法，这在依赖于 Map.keySet() 或 null 值进行初始化时比较有用。注意基本类型（int、boolean 等）是不能设置成 null 的。	true | false	false
+                returnInstanceForEmptyRow	当返回行的所有列都是空时，MyBatis默认返回 null。 当开启这个设置时，MyBatis会返回一个空实例。 请注意，它也适用于嵌套的结果集（如集合或关联）。（新增于 3.4.2）	true | false	false
+                logPrefix	指定 MyBatis 增加到日志名称的前缀。	任何字符串	未设置
+                logImpl	指定 MyBatis 所用日志的具体实现，未指定时将自动查找。	SLF4J | LOG4J | LOG4J2 | JDK_LOGGING | COMMONS_LOGGING | STDOUT_LOGGING | NO_LOGGING	未设置
+                proxyFactory	指定 Mybatis 创建可延迟加载对象所用到的代理工具。	CGLIB | JAVASSIST	JAVASSIST （MyBatis 3.3 以上）
+                vfsImpl	指定 VFS 的实现	自定义 VFS 的实现的类全限定名，以逗号分隔。	未设置
+                useActualParamName	允许使用方法签名中的名称作为语句参数名称。 为了使用该特性，你的项目必须采用 Java 8 编译，并且加上 -parameters 选项。（新增于 3.4.1）	true | false	true
+                configurationFactory	指定一个提供 Configuration 实例的类。 这个被返回的 Configuration 实例用来加载被反序列化对象的延迟加载属性值。 这个类必须包含一个签名为static Configuration getConfiguration() 的方法。（新增于 3.2.3）	一个类型别名或完全限定类名。	未设置
+                shrinkWhitespacesInSql	从SQL中删除多余的空格字符。请注意，这也会影响SQL中的文字字符串。 (新增于 3.5.5)	true | false	false
+                defaultSqlProviderType	Specifies an sql provider class that holds provider method (Since 3.5.6). This class apply to the type(or value) attribute on sql provider annotation(e.g. @SelectProvider), when these attribute was omitted.
+
+    -->
+    <settings>
+        <setting name="logPrefix" value="SLF4J"/>
+    </settings>
+
+
+    <!--    3。类型别名可为 Java 类型设置一个缩写名字。 它仅用于 XML 配置，意在降低冗余的全限定类名书写。
+
+            系统自带的：
+                别名	映射的类型
+                _byte	byte
+                _long	long
+                _short	short
+                _int	int
+                _integer	int
+                _double	double
+                _float	float
+                _boolean	boolean
+                string	String
+                byte	Byte
+                long	Long
+                short	Short
+                int	Integer
+                integer	Integer
+                double	Double
+                float	Float
+                boolean	Boolean
+                date	Date
+                decimal	BigDecimal
+                bigdecimal	BigDecimal
+                object	Object
+                map	Map
+                hashmap	HashMap
+                list	List
+                arraylist	ArrayList
+                collection	Collection
+                iterator	Iterator
+
+            自定义的
+                <typeAlias alias="Student" type="com.test.mybatis.entity.Student"/>
+
+            还可以配置一个包，包中的每一个 javaBean 都给一个 小写开头的 缩写，还可以使用 @Alias("author") 注解 自定义
+                <package name="domain.blog"/>
+    -->
+    <typeAliases>
+        <typeAlias alias="Actor" type="com.test.Actor"/>
+        <typeAlias alias="Film" type="com.test.Film"/>
+    </typeAliases>
+
+    <!--    4。 MyBatis 在设置预处理语句（PreparedStatement）中的参数或从结果集中取出一个值时， 都会用类型处理器将获取到的值以合适的方式转换成 Java 类型。
+            你可以重写已有的类型处理器或创建你自己的类型处理器来处理不支持的或非标准的类型。
+            默认的类型转换规则  https://mybatis.org/mybatis-3/zh/configuration.html#typeHandlers
+    -->
+    <!--    <typeHandlers></typeHandlers>-->
+
+
+    <!--   5。 每次 MyBatis 创建结果对象的新实例时，它都会使用一个对象工厂（ObjectFactory）实例来完成实例化工作。 -->
+    <!--    <objectFactory type=""></objectFactory>-->
+
+
+    <!--    6。MyBatis 允许你在映射语句执行过程中的某一点进行拦截调用。默认情况下，MyBatis 允许使用插件来拦截的方法调用包括：
+            Executor (update, query, flushStatements, commit, rollback, getTransaction, close, isClosed)
+            ParameterHandler (getParameterObject, setParameters)
+            ResultSetHandler (handleResultSets, handleOutputParameters)
+            StatementHandler (prepare, parameterize, batch, update, query)
+    -->
+    <!--    <plugins></plugins>-->
+
+
+    <!-- 7。环境 配置，列表，可以在 创建 SqlSessionFactory 时 指定 哪个环境 -->
+    <environments default="development">
+
+        <!-- 定义环境 -->
+        <environment id="development">
+
+            <!-- 事务管理器，有两种 JDBC MANAGED -->
+            <transactionManager type="JDBC"/>
+
+            <!-- 数据源，有三种 UNPOOLED POOLED JNDI -->
+            <dataSource type="POOLED">
+                <property name="driver" value="com.mysql.cj.jdbc.Driver"/>
+                <property name="url" value="jdbc:mysql://127.0.0.1:3306/sakila"/>
+                <property name="username" value="root"/>
+                <property name="password" value="root"/>
+            </dataSource>
+        </environment>
+    </environments>
+
+    <!--    8。MyBatis 可以根据不同的数据库厂商执行不同的语句，这种多厂商的支持是基于映射语句中的 databaseId 属性。 -->
+    <!--    <databaseIdProvider type=""></databaseIdProvider>-->
+
+
+    <!-- 9。映射文件, 有多种方式 指定 映射文件的 位置
+
+        使用相对于类路径的资源引用
+            <mapper resource="org/mybatis/builder/AuthorMapper.xml"/>
+        使用完全限定资源定位符（URL）
+            <mapper url="file:///var/mappers/AuthorMapper.xml"/>
+        使用映射器接口实现类的完全限定类名，这个需要 映射器 与 xml  同名 同目录
+            <mapper class="org.mybatis.builder.AuthorMapper"/>
+        将包内的映射器接口实现全部注册为映射器，这个需要 映射器 与 xml  同名 同目录
+            <package name="org.mybatis.builder"/>
+    -->
+    <mappers>
+        <mapper resource="mapper/ActorMapper.xml"/>
+    </mappers>
+</configuration>
