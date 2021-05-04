@@ -15,3 +15,7 @@ include("database:hibernate:basic")
 include("database:hibernate:jpa")
 include("database:mybatis:xml")
 include("database:mybatis:annotation")
+
+include("utils:lombok")
+include("utils:apache-common")
+include("utils:guava")
