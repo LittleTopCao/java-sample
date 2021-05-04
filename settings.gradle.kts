@@ -1,3 +1,5 @@
+include("base")
+
 include("logger:jdk")
 include("logger:slf4j")
 include("logger:log4j")
