@@ -20,5 +20,6 @@ include("utils:lombok")
 include("utils:apache-common")
 include("utils:guava")
 
-
 include("spring:property-config")
+
+include("cloud:apollo-test")
