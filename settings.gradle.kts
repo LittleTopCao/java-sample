@@ -17,6 +17,8 @@ include("database:mybatis:xml")
 include("database:mybatis:annotation")
 include("database:mybatis:generator")
 
+include("nosql:mongodb")
+
 include("utils:lombok")
 include("utils:apache-common")
 include("utils:guava")
