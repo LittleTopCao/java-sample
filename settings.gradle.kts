@@ -15,6 +15,7 @@ include("database:hibernate:basic")
 include("database:hibernate:jpa")
 include("database:mybatis:xml")
 include("database:mybatis:annotation")
+include("database:mybatis:generator")
 
 include("utils:lombok")
 include("utils:apache-common")
