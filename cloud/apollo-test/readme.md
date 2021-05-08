@@ -153,7 +153,70 @@ cluster 集群
     Config 对象还支持 设置 监听器，当 命名空间 的配置有变化时 调用
 
 2. Spring 集成使用方式
+    1. 配置
+       1. xml 方式配置
+       2. java 方式配置
+       3. Spring Boot集成方式（推荐）
+           在 application.properties 中放入 apollo.bootstrap.enabled = true
+           配置多个 命名空间（可选）apollo.bootstrap.namespaces = application,FX.apollo,application.yml
+           如果日志的配置也放到 apollo 中，需要把初始化提前：apollo.bootstrap.eagerLoad.enabled=true
+    2. Spring Placeholder 的方式使用
+       1. xml 使用方式
+```xml
+<bean class="com.ctrip.framework.apollo.spring.TestXmlBean">
+    <property name="timeout" value="${timeout:100}"/>
+    <property name="batch" value="${batch:200}"/>
+</bean>
+```
+       2. Java Config使用方式
+```java
+public class TestJavaConfigBean {
+    @Value("${timeout:100}")
+    private int timeout;
+}
+```
+       3. ConfigurationProperties 使用方式
+```java
+@ConfigurationProperties(prefix = "redis.cache")
+public class SampleRedisConfig {
+    private int expireSeconds;
+    private int commandTimeout;
+}
+```
+    3. Spring Annotation 支持
+       1. @ApolloConfig 用来自动注入Config对象
+```java
+public class TestApolloAnnotationBean {
+    @ApolloConfig
+    private Config config; //inject config for namespace application
+    @ApolloConfig("application")
+    private Config anotherConfig; //inject config for namespace application
+}
+```
+       2. @ApolloConfigChangeListener 用来自动注册ConfigChangeListener
+```java
+public class TestApolloAnnotationBean {
+  @ApolloConfigChangeListener
+  private void someOnChange(ConfigChangeEvent changeEvent) {
+    if (changeEvent.isChanged("batch")) {
+      batch = config.getIntProperty("batch", 100);
+    }
+  }
+}
+```
+       3. @ApolloJsonValue 用来把配置的json字符串自动注入为对象
+```java
+public class TestApolloAnnotationBean {
+    @ApolloJsonValue("${jsonBeanProperty:[]}")
+    private List<JsonBean> anotherJsonBeans;
+}
+```
 
 
 3. 本地开发模式
     支持不连接 apollo 服务器
+    1. 把环境改为 Local，例如： 修改/opt/settings/server.properties（Mac/Linux）或C:\opt\settings\server.properties（Windows）文件，设置env为Local：
+    2. 把配置文件放在 Mac/Linux: /opt/data/{appId}/config-cache  Windows: C:\opt\data\{appId}\config-cache
+        * 推荐的方式是先在普通模式下使用Apollo，这样Apollo会自动创建该目录并在目录下生成配置文件。
+    3.  本地配置文件需要按照一定的文件名格式放置于本地配置目录下，文件名格式如下： {appId}+{cluster}+{namespace}.properties
+        例如：appId+default+application.properties
