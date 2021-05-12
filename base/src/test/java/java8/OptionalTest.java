@@ -30,6 +30,7 @@ import java.util.Optional;
  *
  * https://www.cnblogs.com/zhangboyu/p/7580262.html
  */
+@SuppressWarnings("all")
 public class OptionalTest {
 
     /**
@@ -103,22 +104,22 @@ public class OptionalTest {
      */
     @Test
     public void test05() {
-        User user = new User("anna@gmail.com", "1234");
-
-        String result = Optional.ofNullable(user)
-                .flatMap(u -> u.getAddress())
-                .flatMap(a -> a.getCountry())
-                .map(c -> c.getIsocode())
-                .orElse("default");
-
-
-
-        //使用方法引用
-        String result2 = Optional.ofNullable(user)
-                .flatMap(User::getAddress)
-                .flatMap(Address::getCountry)
-                .map(Country::getIsocode)
-                .orElse("default");
+//        User user = new User("anna@gmail.com", "1234");
+//
+//        String result = Optional.ofNullable(user)
+//                .flatMap(u -> u.getAddress())
+//                .flatMap(a -> a.getCountry())
+//                .map(c -> c.getIsocode())
+//                .orElse("default");
+//
+//
+//
+//        //使用方法引用
+//        String result2 = Optional.ofNullable(user)
+//                .flatMap(User::getAddress)
+//                .flatMap(Address::getCountry)
+//                .map(Country::getIsocode)
+//                .orElse("default");
     }
 
 
