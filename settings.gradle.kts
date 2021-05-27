@@ -22,7 +22,10 @@ include("nosql:mongodb")
 include("utils:lombok")
 include("utils:apache-common")
 include("utils:guava")
+include("utils:swagger")
 
 include("spring:property-config")
 
 include("cloud:apollo-test")
+
+include("mq:rocketmq")
