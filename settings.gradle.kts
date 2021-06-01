@@ -1,5 +1,7 @@
 include("base")
 
+include("json")
+
 include("logger:jdk")
 include("logger:slf4j")
 include("logger:log4j")
@@ -13,9 +15,6 @@ include("net:retrofit")
 include("database:jdbc")
 include("database:hibernate:basic")
 include("database:hibernate:jpa")
-include("database:mybatis:xml")
-include("database:mybatis:annotation")
-include("database:mybatis:generator")
 
 include("nosql:mongodb")
 
