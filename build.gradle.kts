@@ -10,7 +10,9 @@ repositories {
 }
 
 dependencies {
-    implementation("org.apache.commons:commons-lang3:3.12.0")
+    testCompile("junit", "junit", "4.12")
+}
 
-    testImplementation("junit", "junit", "4.12")
+tasks.withType<JavaCompile> {
+    options.encoding = "UTF-8"
 }

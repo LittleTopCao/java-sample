@@ -14,7 +14,3 @@ dependencies {
 
     testCompile("junit:junit:4.12")
 }
-
-tasks.withType<JavaCompile> {
-    options.encoding = "UTF-8"
-}

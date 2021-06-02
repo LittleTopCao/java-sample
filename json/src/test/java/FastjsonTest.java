@@ -1,6 +1,7 @@
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import com.alibaba.fastjson.serializer.SerializerFeature;
 import org.junit.Test;
 
 import java.lang.reflect.Type;
@@ -87,7 +88,8 @@ public class FastjsonTest {
      */
     @Test
     public void test02() {
-
+        HashMap<String, String> stringStringHashMap = new HashMap<>();
+        stringStringHashMap.putAll(null);
 
     }
 
@@ -96,7 +98,8 @@ public class FastjsonTest {
      */
     @Test
     public void test03() {
-
+        People people = new People();
+        System.out.println(JSON.toJSONString(people, new SerializerFeature[]{SerializerFeature.WriteMapNullValue, SerializerFeature.WriteNullListAsEmpty, SerializerFeature.WriteNullStringAsEmpty}));
 
     }
 
