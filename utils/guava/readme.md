@@ -7,7 +7,11 @@
     3. 常见Object方法: 简化Object方法实现，如hashCode()和toString(), (Java7 引入了 Objects)
     4. 排序: Guava强大的”流畅风格Comparator”
     5. Throwables：简化了异常和错误的传播与检查
-2. 集合(Collections)
+2. 集合(Collections), 最成熟和最受欢迎的部分
+   1 不可变集合: 用不变的集合进行防御性编程和性能提升。
+   2 新集合类型: multisets, multimaps, tables, bidirectional maps等
+   3 强大的集合工具类: 提供java.util.Collections中没有的集合工具
+   4 扩展工具类：让实现和扩展集合类变得更容易，比如创建Collection的装饰器，或实现迭代器
 3. 图数据结构(Graphs)
 4. 缓存(Caches)
 5. 函数式风格(Functional idioms)

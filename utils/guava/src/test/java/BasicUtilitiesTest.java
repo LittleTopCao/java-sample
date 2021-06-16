@@ -13,7 +13,7 @@ import static com.google.common.base.Preconditions.*;
 /**
  * 基本工具
  */
-public class BasicUtilities {
+public class BasicUtilitiesTest {
 
     /**
      * 可选空指针, java8 已经有了
