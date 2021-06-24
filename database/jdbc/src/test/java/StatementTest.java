@@ -34,7 +34,7 @@ public class StatementTest {
             int i = statement.executeUpdate("insert into actor (first_name, last_name) values ('xiao', 'ming')");
             System.out.println(i);
 
-            //可以返回 自动生成的键 ，Statement.RETURN_GENERATED_KEYS 、Statement.NO_GENERATED_KEYS
+            //可以返回 自动生成的键 ，Statement.RETURN_GENERATED_KEYS 、Statement.NO_GENERATED_KEYS （并不是直接从方法返回，当前方法返回的还是影响的行数，需要调用另一个方法获取）
             // 执行完成 用 getGeneratedKeys 方法获得
             i = statement.executeUpdate("insert into actor (first_name, last_name) values ('xiao', 'ming')", Statement.RETURN_GENERATED_KEYS);
             System.out.println(i);
