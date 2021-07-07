@@ -26,5 +26,3 @@ include("utils:swagger")
 include("spring:property-config")
 
 include("cloud:apollo-test")
-
-include("mq:rocketmq")
