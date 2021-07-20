@@ -11,6 +11,7 @@ include("net:java-net")
 include("net:http-server")
 include("net:okhttp")
 include("net:retrofit")
+include("net:netty")
 
 include("database:jdbc")
 include("database:hibernate:basic")
