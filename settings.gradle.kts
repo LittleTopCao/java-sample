@@ -26,3 +26,7 @@ include("utils:swagger")
 include("spring:property-config")
 
 include("cloud:apollo-test")
+
+include("io:bio")
+include("io:nio")
+include("io:aio")
