@@ -178,7 +178,7 @@ public class StreamTest {
      *          分区 partitioningBy、
      *          汇总 summarizingInt、
      *          化简 reducing、
-     *          转换 toXXX(toList, toSet)
+     *          转换 toXXX(toList, toSet, toMap)
      *
      * 4. find
      *      两个方法 findAny 和 findFirst ， 对于并行流 findAny 性能要好于 findFirst
@@ -225,6 +225,8 @@ public class StreamTest {
 //        System.out.println(Stream.of("a", "b", "c", "d").collect(Collectors.summarizingInt())); // 汇总
 //        System.out.println(Stream.of("a", "b", "c", "d").collect(Collectors.reducing())); // 化简
         System.out.println(Stream.of("a", "b", "c", "d").collect(Collectors.toList())); // 转换 toXXX
+        System.out.println(Stream.of("a", "b", "c", "d").collect(Collectors.toMap(i -> i, i -> 2))); // 转换 toXXX
+
 
 //        List<String> asList = stringStream.collect(ArrayList::new, ArrayList::add,
 //                ArrayList::addAll);
